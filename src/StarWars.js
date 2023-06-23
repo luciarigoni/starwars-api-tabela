@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
+import Modal from "./Modal";
 
 function StarwarsComponent() {
 
@@ -8,16 +9,8 @@ function StarwarsComponent() {
   const [paginaAnterior, setPaginaAnterior] = useState(null);
   const [paginaProximo, setPaginaProximo] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
-//   useEffect(()=> {
-//     fetch('https://swapi.dev/api/people').then(res => res.json()).then(data => {
-//       const tableResults = ['name', 'height', 'mass', 'hair_color', 'skin_color', 'eye_color', 'birth_year']
-//       setColum(tableResults)
-//       setRecords(data.results)
-//       setPaginaAnterior(data.previous);
-//       setPaginaProximo(data.next);
-//     });
-//   }, []);
     useEffect(() => {
         setLoading(true)
         setTimeout(() =>{
@@ -84,6 +77,10 @@ function StarwarsComponent() {
                         <td>{record.skin_color}</td>
                         <td>{record.eye_color}</td>
                         <td>{record.birth_year}</td>
+                        <td>
+                          <button className="modalBtn" onClick={()=> setOpenModal(true)}>More info</button>
+                          <Modal open={openModal} onClose={() => setOpenModal(false)}/>
+                        </td>
                     </tr>
                     )}
                     <br></br>
