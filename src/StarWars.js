@@ -4,32 +4,34 @@ import Modal from "./Modal";
 
 function StarwarsComponent() {
 
-  const [column, setColum] = useState([])
   const [records, setRecords] = useState([])
   const [paginaAnterior, setPaginaAnterior] = useState(null);
   const [paginaProximo, setPaginaProximo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
+  function findData() {
+      fetch('https://swapi.dev/api/people').then(res => res.json()).then(data => {
+      setRecords(data.results)
+      setPaginaAnterior(data.previous);
+      setPaginaProximo(data.next);
+  });
+  }
+
+  function loadingPage() {
+    setLoading(true)
+    setTimeout(() =>{
+      setLoading(false)
+    }, 4000)
+  }
+
     useEffect(() => {
-        setLoading(true)
-        setTimeout(() =>{
-          setLoading(false)
-        }, 4000)
-        fetch('https://swapi.dev/api/people').then(res => res.json()).then(data => {
-            const tableResults = ['name', 'height', 'mass', 'hair_color', 'skin_color', 'eye_color', 'birth_year']
-            setColum(tableResults)
-            setRecords(data.results)
-            setPaginaAnterior(data.previous);
-            setPaginaProximo(data.next);
-        });
+        loadingPage()
+        findData()
     }, []);
 
   const carregarPaginaAnterior = () => {
-    setLoading(true)
-        setTimeout(() =>{
-          setLoading(false)
-        }, 3000)
+    loadingPage()
     fetch(paginaAnterior)
     .then(res => res.json())
     .then(data => {
@@ -40,10 +42,7 @@ function StarwarsComponent() {
   };
 
   const carregarPaginaProximo = () => {
-    setLoading(true)
-        setTimeout(() =>{
-          setLoading(false)
-        }, 3000)
+    loadingPage()
     fetch(paginaProximo)
     .then(res => res.json())
     .then(data => {
@@ -63,9 +62,14 @@ function StarwarsComponent() {
           <table className="custom-table">
                 <thead>
                     <tr>
-                        {column.map((c, i) => 
-                        <th key={i}>{c}</th>
-                        )}
+                      <th>Name</th>
+                      <th>Height</th>
+                      <th>Mass</th>
+                      <th>Hair color</th>
+                      <th>Skin color</th>
+                      <th>Eye color</th>
+                      <th>Birth year</th>
+                      <th>Info</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,7 +83,7 @@ function StarwarsComponent() {
                         <td>{record.birth_year}</td>
                         <td>
                           <button className="modalBtn" onClick={()=> setOpenModal(true)}>More info</button>
-                          <Modal open={openModal} onClose={() => setOpenModal(false)}/>
+                          <Modal open={openModal} onClose={() => setOpenModal(false)} dadosModal={record.homeworld}/> 
                         </td>
                     </tr>
                     )}
