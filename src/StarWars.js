@@ -83,7 +83,7 @@ function StarwarsComponent() {
                         <td>{record.birth_year}</td>
                         <td>
                           <button className="modalBtn" onClick={()=> setOpenModal(true)}>More info</button>
-                          <Modal open={openModal} onClose={() => setOpenModal(false)} dadosModal={record.homeworld}/> 
+                          <Modal open={openModal} onClose={() => setOpenModal(false)}/> 
                         </td>
                     </tr>
                     )}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import starwars from './image/starwarsmodal.jpeg'
 
-const Modal = ({homeworld, open, onClose}) => {
+const Modal = ({open, onClose}) => {
     if(!open) return null
   return (
     <div className='overlay'>
@@ -10,7 +10,6 @@ const Modal = ({homeworld, open, onClose}) => {
         <div className='modalRight'>
             <p onClick={onClose} className='closeBtn'>X</p>
             <div className='content'>
-            {homeworld}
             </div>
         </div>
       </div>
