@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
-import Modal from "./Modal";
+import Modal from "react-modal";
+import starwars from './image/starwarsmodal.jpeg'
+
 
 function StarwarsComponent() {
 
@@ -8,7 +10,7 @@ function StarwarsComponent() {
   const [paginaAnterior, setPaginaAnterior] = useState(null);
   const [paginaProximo, setPaginaProximo] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [modal, setOpenModal] = useState(false);
 
   function findData() {
       fetch('https://swapi.dev/api/people').then(res => res.json()).then(data => {
@@ -51,6 +53,14 @@ function StarwarsComponent() {
       setPaginaProximo(data.next);
   });
 };
+
+const openModal = (record) => {
+  setRecords(record);
+  setOpenModal(true);
+} 
+const closeModal = () => {
+  setOpenModal(false);
+}
   return (
     <div>
         <h1 className="title">Starwars</h1>
@@ -83,7 +93,40 @@ function StarwarsComponent() {
                         <td>{record.birth_year}</td>
                         <td>
                           <button className="modalBtn" onClick={()=> setOpenModal(true)}>More info</button>
-                          <Modal open={openModal} onClose={() => setOpenModal(false)}/> 
+                          <Modal 
+                             style={{
+                              overlay: {
+                                backgroundColor: "rgba(0,0,0, 0.1)",
+                                position: "fixed",
+                                width: "100%",
+                                height: "100%"
+                              },
+                              content: {
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                textAlign: "center",
+                                marginTop: "200rem",
+                                padding: "1rem 2rem"
+                              },
+                            }}
+                            isOpen={modal}>
+                              <div className='modalContainer'>
+                                   <img src={starwars} alt='Starwars Logo'/>
+                                   <div className='modalRight'>
+                                       <button onClick={closeModal}>X</button>
+                                       <div className='content'>
+                                          <ul>
+                                            {records.map((record, name) => {
+                                              return (
+                                                <li key={name}>{record.name}</li>
+                                              )
+                                            })}
+                                          </ul>
+                                       </div>
+                                       </div>
+                                </div>
+                            </Modal> 
                         </td>
                     </tr>
                     )}

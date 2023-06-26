@@ -51,6 +51,12 @@ body{
 .modalBtn{
   z-index: -1;
 }
+.overlay{
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
 .modalContainer {
   max-width: 600px;
   width: 100%;
