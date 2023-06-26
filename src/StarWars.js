@@ -117,9 +117,9 @@ const closeModal = () => {
                                        <button onClick={closeModal}>X</button>
                                        <div className='content'>
                                           <ul>
-                                            {records.map((record, name) => {
+                                            {records.map((record, i) => {
                                               return (
-                                                <li key={name}>{record.name}</li>
+                                                <ul key={i}>{record.name}</ul>
                                               )
                                             })}
                                           </ul>
